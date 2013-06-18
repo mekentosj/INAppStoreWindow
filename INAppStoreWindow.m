@@ -40,9 +40,9 @@
 
 /** Lion */
 
-#define IN_COLOR_MAIN_START_L [NSColor colorWithDeviceWhite:0.66 alpha:1.0]
-#define IN_COLOR_MAIN_END_L [NSColor colorWithDeviceWhite:0.9 alpha:1.0]
-#define IN_COLOR_MAIN_BOTTOM_L [NSColor colorWithDeviceWhite:0.408 alpha:1.0]
+#define IN_COLOR_MAIN_START_L [NSColor colorWithDeviceWhite:0.77 alpha:1.0]
+#define IN_COLOR_MAIN_END_L [NSColor colorWithDeviceWhite:0.94 alpha:1.0]
+#define IN_COLOR_MAIN_BOTTOM_L [NSColor colorWithDeviceWhite:0.5 alpha:1.0]
 
 #define IN_COLOR_NOTMAIN_START_L [NSColor colorWithDeviceWhite:0.878 alpha:1.0]
 #define IN_COLOR_NOTMAIN_END_L [NSColor colorWithDeviceWhite:0.976 alpha:1.0]
@@ -259,13 +259,18 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
             [bottomColor set];
             NSRectFill(bottomRect);
             
+            /* WHITE HIGHLIGHT DISABLED
+             
             if (IN_RUNNING_LION) {
               bottomRect.origin.y += 1.0;
               [[NSColor colorWithDeviceWhite:1.0 alpha:0.12] setFill];
               [[NSBezierPath bezierPathWithRect:bottomRect] fill];
             }
+            */
         }
         
+        /* DISABLED NOISE DRAWING
+         
         if (IN_RUNNING_LION && drawsAsMainWindow) {
             CGRect noiseRect = NSInsetRect(drawingRect, 1.0, 1.0);
             
@@ -282,6 +287,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
             
             [self drawNoiseWithOpacity:0.1];
         }
+        */
     }
     
     if ([window showsTitle] && (([window styleMask] & NSFullScreenWindowMask) == 0 || window.showsTitleInFullscreen)) {
@@ -410,17 +416,34 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 @synthesize centerFullScreenButton = _centerFullScreenButton;
 @synthesize centerTrafficLightButtons = _centerTrafficLightButtons;
 @synthesize verticalTrafficLightButtons = _verticalTrafficLightButtons;
+@synthesize verticallyCenterTitle = _verticallyCenterTitle;
 @synthesize hideTitleBarInFullScreen = _hideTitleBarInFullScreen;
 @synthesize titleBarDrawingBlock = _titleBarDrawingBlock;
 @synthesize showsBaselineSeparator = _showsBaselineSeparator;
 @synthesize fullScreenButtonRightMargin = _fullScreenButtonRightMargin;
+@synthesize fullScreenButtonTopMargin = _fullScreenButtonTopMargin;
 @synthesize trafficLightButtonsLeftMargin = _trafficLightButtonsLeftMargin;
+@synthesize trafficLightButtonsTopMargin = _trafficLightButtonsTopMargin;
+@synthesize trafficLightSeparation = _trafficLightSeparation;
 @synthesize titleBarStartColor = _titleBarStartColor;
 @synthesize titleBarEndColor = _titleBarEndColor;
+@synthesize titleTextColor = _titleTextColor;
+@synthesize titleTextShadow = _titleTextShadow;
 @synthesize baselineSeparatorColor = _baselineSeparatorColor;
 @synthesize inactiveTitleBarStartColor = _inactiveTitleBarStartColor;
 @synthesize inactiveTitleBarEndColor = _inactiveTitleBarEndColor;
 @synthesize inactiveBaselineSeparatorColor = _inactiveBaselineSeparatorColor;
+@synthesize inactiveTitleTextColor = _inactiveTitleTextColor;
+@synthesize inactiveTitleTextShadow = _inactiveTitleTextShadow;
+@synthesize showsTitle = _showsTitle;
+@synthesize showsTitleInFullscreen = _showsTitleInFullscreen;
+
+@synthesize closeButton = _closeButton;
+@synthesize minimizeButton = _minimizeButton;
+@synthesize zoomButton = _zoomButton;
+@synthesize fullScreenButton = _fullScreenButton;
+@synthesize titleFont = _titleFont;
+
 
 #pragma mark -
 #pragma mark Initialization

@@ -117,6 +117,11 @@ NSString *const kINWindowButtonGroupDefault = @"com.indragie.inappstorewindow.de
 
 @synthesize groupIdentifier = _groupIdentifier;
 @synthesize mouseTrackingArea = _mouseTrackingArea;
+@synthesize activeImage = _activeImage;
+@synthesize activeNotKeyWindowImage = _activeNotKeyWindowImage;
+@synthesize inactiveImage = _inactiveImage;
+@synthesize rolloverImage = _rolloverImage;
+@synthesize pressedImage = _pressedImage;
 
 + (instancetype)windowButtonWithSize:(NSSize)size groupIdentifier:(NSString *)groupID {
     INWindowButton *button = [[self alloc] initWithSize:size groupIdentifier:groupID];
