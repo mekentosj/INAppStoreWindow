@@ -41,6 +41,9 @@ NSString *const kINWindowButtonGroupDefault = @"com.indragie.inappstorewindow.de
 
 @implementation INWindowButtonGroup
 
+@synthesize numberOfCaptures = _numberOfCaptures;
+@synthesize identifier = _identifier;
+
 + (instancetype)groupWithIdentifier:(NSString *)identifier {
     static NSMutableDictionary *groups = nil;
     if (groups == nil) {
@@ -111,6 +114,9 @@ NSString *const kINWindowButtonGroupDefault = @"com.indragie.inappstorewindow.de
 @end
 
 @implementation INWindowButton
+
+@synthesize groupIdentifier = _groupIdentifier;
+@synthesize mouseTrackingArea = _mouseTrackingArea;
 
 + (instancetype)windowButtonWithSize:(NSSize)size groupIdentifier:(NSString *)groupID {
     INWindowButton *button = [[self alloc] initWithSize:size groupIdentifier:groupID];
