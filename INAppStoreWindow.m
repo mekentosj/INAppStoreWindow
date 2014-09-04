@@ -17,6 +17,8 @@
 
 #import "INAppStoreWindow.h"
 
+#import "NSObject_Extensions.h"
+
 #define IN_RUNNING_LION (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
 #define IN_COMPILING_LION __MAC_OS_X_VERSION_MAX_ALLOWED >= 1070
 
@@ -167,6 +169,9 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 - (void)_hideTitleBarView:(BOOL)hidden;
 - (CGFloat)_defaultTrafficLightLeftMargin;
 - (CGFloat)_defaultTrafficLightSeparation;
+
+@property BOOL inFullScreen;
+
 @end
 
 @implementation INTitlebarView
@@ -206,6 +211,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)drawRect:(NSRect)dirtyRect
 {
+    
     INAppStoreWindow *window = (INAppStoreWindow *)[self window];
     BOOL drawsAsMainWindow = ([window isMainWindow] && [[NSApplication sharedApplication] isActive]);
     
@@ -627,7 +633,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
     }
 }
 
-- (void)setCenterFullScreenButton:(BOOL)centerFullScreenButton{
+- (void)setCenterFullScreenButton:(BOOL)centerFullScreenButton {
     if( _centerFullScreenButton != centerFullScreenButton ) {
         _centerFullScreenButton = centerFullScreenButton;
         [self _layoutTrafficLightsAndContent];
@@ -858,9 +864,14 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
         minimizeFrame.origin.y = NSMaxY(zoomFrame) + self.trafficLightSeparation - 2.f;
         closeFrame.origin.y = NSMaxY(minimizeFrame) + self.trafficLightSeparation - 2.f;
     }
-    [close setFrame:closeFrame];
-    [minimize setFrame:minimizeFrame];
-    [zoom setFrame:zoomFrame];
+    
+    // see https://github.com/indragiek/INAppStoreWindow/issues/180
+    if ((RUNNING_ON_YOSEMITE && !self.inFullScreen) || !RUNNING_ON_YOSEMITE)
+    {
+        [close setFrame:closeFrame];
+        [minimize setFrame:minimizeFrame];
+        [zoom setFrame:zoomFrame];
+    }
     
     #if IN_COMPILING_LION
     // Set the frame of the FullScreen button in Lion if available
@@ -890,31 +901,33 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification 
 {
+    _inFullScreen = YES;
+    
     if (_hideTitleBarInFullScreen) {
         // Recalculate the views when entering from fullscreen
         _titleBarHeight = 0.0f;
         [self _layoutTrafficLightsAndContent];
         [self _displayWindowAndTitlebar];
-        
         [self _hideTitleBarView:YES];
     }
 }
 
 - (void)windowWillExitFullScreen:(NSNotification *)notification 
 {
+    
     if (_hideTitleBarInFullScreen) {
         _titleBarHeight = _cachedTitleBarHeight;
         [self _layoutTrafficLightsAndContent];
         [self _displayWindowAndTitlebar];
-        
         [self _hideTitleBarView:NO];
     }
 }
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-    [self _layoutTrafficLightsAndContent];
+    _inFullScreen = NO;
     [self _setupTrafficLightsTrackingArea];
+    [self _layoutTrafficLightsAndContent];
 }
 
 - (NSView *)themeFrameView {
