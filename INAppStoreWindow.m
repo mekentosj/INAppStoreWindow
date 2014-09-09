@@ -863,15 +863,12 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
     NSRect minimizeFrame = [minimize frame];
     NSRect zoomFrame = [zoom frame];
     NSRect titleBarFrame = [_titleBarContainer frame];
-    MTLog(@"titleBarFrame frame %@", NSStringFromRect(titleBarFrame));
 
     CGFloat buttonOrigin = 0.0;
     if (!self.verticalTrafficLightButtons)
     {
         if (self.centerTrafficLightButtons)
         {
-            MTLog(@"theme frame %@", NSStringFromRect([[self themeFrameView] frame]));
-
             buttonOrigin = round(NSMidY(titleBarFrame) - INMidHeight(closeFrame));
         }
         else
@@ -902,19 +899,6 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
         zoomFrame.origin.y = buttonOrigin;
         minimizeFrame.origin.y = NSMaxY(zoomFrame) + self.trafficLightSeparation - 2.f;
         closeFrame.origin.y = NSMaxY(minimizeFrame) + self.trafficLightSeparation - 2.f;
-    }
-    
-    // see https://github.com/indragiek/INAppStoreWindow/issues/180
-    if ((RUNNING_ON_YOSEMITE && !self.isFullScreen) || !RUNNING_ON_YOSEMITE)
-    {
-        MTLog(@"Set frame %@", NSStringFromRect(closeFrame));
-        [close setFrame:closeFrame];
-        [minimize setFrame:minimizeFrame];
-        [zoom setFrame:zoomFrame];
-    }
-    else
-    {
-        MTLog(@"NOT setting frame %@", NSStringFromRect(close.frame));
     }
     
     #if IN_COMPILING_LION
