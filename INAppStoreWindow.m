@@ -808,13 +808,14 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
     [nc addObserver:self selector:@selector(_updateTitlebarView) name:NSApplicationDidBecomeActiveNotification object:nil];
     [nc addObserver:self selector:@selector(_updateTitlebarView) name:NSApplicationDidResignActiveNotification object:nil];
-    #if IN_COMPILING_LION
-    if (IN_RUNNING_LION) {
+
+    if (RUNNING_ON_LION_OR_HIGHER)
+    {
         [nc addObserver:self selector:@selector(windowDidExitFullScreen:) name:NSWindowDidExitFullScreenNotification object:nil];
         [nc addObserver:self selector:@selector(windowWillEnterFullScreen:) name:NSWindowWillEnterFullScreenNotification object:nil];
         [nc addObserver:self selector:@selector(windowWillExitFullScreen:) name:NSWindowWillExitFullScreenNotification object:nil];
     }
-    #endif
+
     [self _createTitlebarView];
     [self _layoutTrafficLightsAndContent];
     [self _setupTrafficLightsTrackingArea];
@@ -901,25 +902,30 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
         closeFrame.origin.y = NSMaxY(minimizeFrame) + self.trafficLightSeparation - 2.f;
     }
     
-    #if IN_COMPILING_LION
     // Set the frame of the FullScreen button in Lion if available
-    if (IN_RUNNING_LION) {
+    if (RUNNING_ON_LION_OR_HIGHER)
+    {
         NSButton *fullScreen = [self _fullScreenButtonToLayout];
         if (fullScreen) {
             NSRect fullScreenFrame = [fullScreen frame];
-            if (!_setFullScreenButtonRightMargin) {
+            if (!_setFullScreenButtonRightMargin)
+            {
                 self.fullScreenButtonRightMargin = NSWidth([_titleBarContainer frame]) - NSMaxX(fullScreen.frame);
             }
             fullScreenFrame.origin.x = NSWidth(titleBarFrame) - NSWidth(fullScreenFrame) - _fullScreenButtonRightMargin;
-            if (self.centerFullScreenButton) {
+            
+            if (self.centerFullScreenButton)
+            {
                 fullScreenFrame.origin.y = round(NSMidY(titleBarFrame) - INMidHeight(fullScreenFrame));
-            } else {
+            }
+            else
+            {
                 fullScreenFrame.origin.y = NSMaxY(titleBarFrame) - NSHeight(fullScreenFrame) - self.fullScreenButtonTopMargin;
             }
             [fullScreen setFrame:fullScreenFrame];
         }
     }
-    #endif
+
     [self _repositionContentView];
 }
 
