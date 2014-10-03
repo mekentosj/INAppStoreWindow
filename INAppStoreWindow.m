@@ -850,7 +850,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)_layoutTrafficLightsAndContent
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     // Reposition/resize the title bar view as needed
@@ -936,7 +936,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification 
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     if (_hideTitleBarInFullScreen)
@@ -951,7 +951,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)windowWillExitFullScreen:(NSNotification *)notification 
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     if (_hideTitleBarInFullScreen)
@@ -965,7 +965,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)windowDidExitFullScreen:(NSNotification *)notification
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
 
     [self _layoutTrafficLightsAndContent];
@@ -1002,7 +1002,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 // Solution for tracking area issue thanks to @Perspx (Alex Rozanski) <https://gist.github.com/972958>
 - (void)_setupTrafficLightsTrackingArea
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     [[self themeFrameView] viewWillStartLiveResize];
@@ -1011,7 +1011,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)_recalculateFrameForTitleBarContainer
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     NSRect themeFrameRect = [[self themeFrameView] frame];
@@ -1021,7 +1021,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)_repositionContentView
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     NSView *contentView = [self contentView];
@@ -1079,7 +1079,7 @@ NS_INLINE CGGradientRef INCreateGradientWithColors(NSColor *startingColor, NSCol
 
 - (void)_updateTitlebarView
 {
-    if (RUNNING_ON_YOSEMITE)
+    if (RUNNING_ON_YOSEMITE_OR_HIGHER)
         return;
     
     [_titleBarView setNeedsDisplay:YES];
