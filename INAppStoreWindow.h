@@ -18,6 +18,8 @@
 #import <Cocoa/Cocoa.h>
 #import "INWindowButton.h"
 
+#import "MTMainWindow.h"
+
 #if __has_feature(objc_arc)
 #define INAppStoreWindowCopy nonatomic, strong
 #define INAppStoreWindowRetain nonatomic, strong
@@ -39,7 +41,7 @@
  Creates a window similar to the Mac App Store window, with centered traffic lights and an 
  enlarged title bar. This does not handle creating the toolbar.
  */
-@interface INAppStoreWindow : NSWindow
+@interface INAppStoreWindow : MTMainWindow
 
 /** 
  The height of the title bar. By default, this is set to the standard title bar height. 
